@@ -1,7 +1,5 @@
 package io.github.hobbstech.commons.notifications.dto;
 
-import io.github.hobbstech.commons.notifications.core.EmailContext;
-import io.github.hobbstech.commons.notifications.core.EmailContext;
 import lombok.Data;
 
 import java.util.Collections;

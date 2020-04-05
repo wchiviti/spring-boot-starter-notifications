@@ -1,10 +1,9 @@
 package io.github.hobbstech.commons.notifications.service;
 
-import io.github.hobbstech.commons.notifications.core.EmailSenderProcessor;
 import io.github.hobbstech.commons.notifications.dto.*;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -16,10 +15,13 @@ import static java.util.stream.Collectors.toSet;
 @Component
 public class EmailSenderImpl implements EmailSender {
 
-    private final EmailSenderProcessor emailSenderProcessor;
+    private final NotificationService notificationService;
 
-    public EmailSenderImpl(EmailSenderProcessor emailSenderProcessor) {
-        this.emailSenderProcessor = emailSenderProcessor;
+    @Value("${emails.from.name}")
+    private String emailFrom;
+
+    public EmailSenderImpl(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -44,10 +46,10 @@ public class EmailSenderImpl implements EmailSender {
         val subject = new Subject();
         subject.setValue(emailMessageTransporter.getSubject());
         sendEmailRequest.setSubject(subject);
-        sendEmailRequest.setFrom("no-reply@hrm-system.com");
-        emailSenderProcessor.process(sendEmailRequest);
+        sendEmailRequest.setFrom(emailFrom);
+        notificationService.sendEmail(sendEmailRequest);
 
-        log.info("------> Email Sent");
+        log.debug("### Email Sent");
 
     }
 
