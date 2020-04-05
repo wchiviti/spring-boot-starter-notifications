@@ -10,7 +10,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 
 @Data
-public class SendEmailRequest implements EmailContext {
+public class SendEmailRequest {
 
     private Body body;
 
